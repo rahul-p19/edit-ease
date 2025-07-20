@@ -12,10 +12,10 @@ import java.io.IOException;
 public class RestClientService {
 
     @Value("${github.username}")
-    private static String owner;
+    private String owner;
 
     @Value("${github.repo}")
-    private static String repo;
+    private String repo;
 
     private final RestClient restClient;
 
