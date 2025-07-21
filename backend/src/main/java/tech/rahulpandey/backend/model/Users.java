@@ -1,5 +1,6 @@
 package tech.rahulpandey.backend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -11,28 +12,18 @@ public class Users {
     @Id
     private int id;
 
+    @Column(unique = true)
     private String username;
 
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     private List<String> roles;
 
     @OneToOne
     private Event event;
-
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public List<String> getRoles() {
         return roles;
@@ -42,16 +33,8 @@ public class Users {
         this.roles = roles;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -62,4 +45,7 @@ public class Users {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
 }

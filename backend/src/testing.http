@@ -11,3 +11,14 @@ Content-Type: application/json
     "username": "seema",
     "password": "s@123"
 }
+
+###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "pandeyrahul.work@gmail.com",
+  "password": "p@123",
+  "roles": [],
+  "username": "test"
+}
