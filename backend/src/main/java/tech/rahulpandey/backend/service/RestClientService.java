@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import tech.rahulpandey.backend.util.JsonUtil;
 
 import java.io.IOException;
 
@@ -19,12 +18,12 @@ public class RestClientService {
 
     private final RestClient restClient;
 
-    private final JsonUtil jsonUtil;
+    private final JsonService jsonService;
 
-    public RestClientService(RestClient.Builder restClientBuilder,  JsonUtil jsonUtil) {
+    public RestClientService(RestClient.Builder restClientBuilder,  JsonService jsonService) {
         String url = String.format("https://api.github.com/repos/%s/%s/contents/", owner, repo);
         restClient = restClientBuilder.baseUrl(url).build();
-        this.jsonUtil = jsonUtil;
+        this.jsonService = jsonService;
     }
 
     // method to get SHA for required file
@@ -33,7 +32,7 @@ public class RestClientService {
                 .uri(path)
                 .retrieve()
                 .body(String.class);
-        return jsonUtil.extractShaFromResponse(res);
+        return jsonService.extractShaFromResponse(res);
     }
 
     // method to update contents of required file

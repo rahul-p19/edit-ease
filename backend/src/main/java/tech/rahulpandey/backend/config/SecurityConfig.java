@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech.rahulpandey.backend.service.MyUserDetailsService;
 
 @Configuration
@@ -23,6 +24,9 @@ public class SecurityConfig {
     @Autowired
     MyUserDetailsService myUserDetailsService;
 
+    @Autowired
+    private JwtFilter jwtFilter;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -31,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

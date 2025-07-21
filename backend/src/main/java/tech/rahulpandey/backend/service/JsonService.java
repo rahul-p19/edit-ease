@@ -1,19 +1,19 @@
-package tech.rahulpandey.backend.util;
+package tech.rahulpandey.backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-public class JsonUtil {
+@Service
+public class JsonService {
 
     private final ObjectMapper objectMapper;
 
-    public JsonUtil(ObjectMapper objectMapper){
+    public JsonService(ObjectMapper objectMapper){
         this.objectMapper = objectMapper;
     }
 

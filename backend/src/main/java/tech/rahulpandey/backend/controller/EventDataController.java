@@ -2,7 +2,7 @@ package tech.rahulpandey.backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 import tech.rahulpandey.backend.service.RestClientService;
-import tech.rahulpandey.backend.util.JsonUtil;
+import tech.rahulpandey.backend.service.JsonService;
 
 import java.io.IOException;
 
@@ -11,18 +11,18 @@ import java.io.IOException;
 public class EventDataController {
 
     private final RestClientService restClientService;
-    private final JsonUtil jsonUtil;
+    private final JsonService jsonService;
 
-    public EventDataController(RestClientService restClientService, JsonUtil jsonUtil) {
+    public EventDataController(RestClientService restClientService, JsonService jsonService) {
         this.restClientService = restClientService;
-        this.jsonUtil = jsonUtil;
+        this.jsonService = jsonService;
     }
 
     @PutMapping("/{path}")
     void updateFileContent(@PathVariable String path, @RequestBody String body) {
         try{
             String sha = restClientService.getFileSha(path);
-            String githubReqBody = jsonUtil.buildRequestBody(sha,body);
+            String githubReqBody = jsonService.buildRequestBody(sha,body);
             restClientService.updateFileContent(path, githubReqBody);
             // also store in a database
         }catch (IOException ie){
