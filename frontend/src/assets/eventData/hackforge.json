@@ -1,0 +1,25 @@
+{
+  "id": 1,
+  "name": "HackForge",
+  "slug": "hackforge",
+  "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
+  "rules": [
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem.",
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem."
+  ],
+  "category": "CODING",
+  "prizes": ["1st: 1000", "2nd: 500", "3rd: 250"],
+  "registrationDeadline": "31-07-2025",
+  "teamSize": "1-3 members",
+  "eventDates": ["04-08-2025", "07-08-2025"],
+  "organisers": [
+    {
+      "name": "John Doe",
+      "phoneNumber": "1234567891"
+    },
+    {
+      "name": "Jane Doe",
+      "phoneNumber": "1234567891"
+    }
+  ]
+}

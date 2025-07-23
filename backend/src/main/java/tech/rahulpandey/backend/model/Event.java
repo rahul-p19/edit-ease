@@ -15,11 +15,11 @@ public class Event {
     @Column(unique = true)
     private String name;
 
+    private String slug;
+
     private String description;
 
     private List<String> rules;
-
-    private List<String> format;
 
     private EventCategory category;
 
@@ -28,9 +28,7 @@ public class Event {
     @JsonFormat(pattern = "dd-mm-yyyy")
     private Date registrationDeadline;
 
-    private Integer minTeamSize;
-
-    private Integer maxTeamSize;
+    private String teamSize;
 
     private List<String> eventDates;
 

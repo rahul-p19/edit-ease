@@ -13,12 +13,12 @@ import Admin from "./components/Admin";
 
 function App() {
   return (
-    <div className="w-full min-h-svh bg-background text-ink font-poppins flex flex-col items-center justify-between">
+    <div className="w-full min-h-svh bg-background text-ink font-poppins flex flex-col items-center justify-between gap-y-8">
     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/manage" element={<Dashboard />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
