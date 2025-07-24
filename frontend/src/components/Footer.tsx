@@ -6,7 +6,7 @@ function Footer() {
       <Link to={"/"} className='text-4xl font-medium'>EditEase</Link>
       <div className='flex flex-col items-center gap-y-2 sm:gap-y-4'>
         <Link to={"/events"} className='border-b border-b-transparent hover:border-b-ink transition-colors duration-150'>Events</Link>
-        <Link to={"/dashboard"} className='border-b border-b-transparent hover:border-b-ink transition-colors duration-150'>Leads</Link>
+        <Link to={"/manage"} className='border-b border-b-transparent hover:border-b-ink transition-colors duration-150'>Leads</Link>
         <Link to={"/admin"} className='border-b border-b-transparent hover:border-b-ink transition-colors duration-150'>Admin</Link>
       </div>
     </footer>

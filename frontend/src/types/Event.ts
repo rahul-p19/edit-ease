@@ -11,8 +11,12 @@ type Organiser = {
     phoneNumber: string;
 }
 
+type StringObj = {
+  value: string;
+}
+
 type EventFormat = {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   description: string;
@@ -25,4 +29,17 @@ type EventFormat = {
   organisers: Organiser[];
 }
 
-export type { EventFormat };
+type EventFormType = {
+  name: string;
+  slug: string;
+  description: string;
+  rules: StringObj[];
+  category: EventCategory;
+  prizes: StringObj[];
+  registrationDeadline: string;
+  teamSize: string;
+  eventDates: StringObj[];
+  organisers: Organiser[];
+}
+
+export type { EventFormat, EventCategory, EventFormType };

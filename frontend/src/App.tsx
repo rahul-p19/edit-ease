@@ -18,12 +18,12 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/manage" element={<Dashboard />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/events" element={<AllEvents />} />
         <Route path="/events/:id" element={<Event />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/manage" element={<Login />} />
+        <Route path="/manage/:slug" element={<Dashboard />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
