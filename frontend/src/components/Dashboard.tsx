@@ -4,14 +4,19 @@ import {
   transformCategory,
   validateCategory,
 } from "../services/formValidation";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getEventBySlug from "../services/getEventBySlug";
+import { useAuth } from "../hooks/useAuth";
 
 
 function Dashboard() {
   const { slug } = useParams();
-  
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  if(!auth || !(auth.slug === slug || auth.role === "ADMIN")) navigate("/login");
+
   const defaultEventData: EventFormType = {
     name: "",
     slug: slug??"",
