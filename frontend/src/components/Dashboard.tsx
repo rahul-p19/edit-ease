@@ -1,24 +1,23 @@
 import { useForm, type SubmitHandler, useFieldArray } from "react-hook-form";
 import type { EventFormType } from "../types/Event";
 import {
+  eventToForm,
   transformCategory,
   validateCategory,
 } from "../services/formValidation";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import getEventBySlug from "../services/getEventBySlug";
 import { useAuth } from "../hooks/useAuth";
-
+import { handleUpdateEvent, getEventBySlug } from "../services/event";
 
 function Dashboard() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const auth = useAuth();
-  console.log(auth);
-  
+
   const defaultEventData: EventFormType = {
     name: "",
-    slug: slug??"",
+    slug: slug ?? "",
     description: "",
     rules: [{ value: "" }],
     category: "CODING",
@@ -28,34 +27,34 @@ function Dashboard() {
     eventDates: [{ value: "" }],
     organisers: [{ name: "", phoneNumber: "" }],
   };
-  
+
   const [eventData, setEventData] = useState<EventFormType>(defaultEventData);
-  const [editing, setEditing] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
-  
+  const [message, setMessage] = useState<string>("");
+
   useEffect(() => {
-    if(!auth || !(auth.slug === slug || auth.role === "ADMIN")) navigate("/login");
+    if (!auth || !(auth.slug === slug || auth.role === "ADMIN"))
+      navigate("/login");
     const fetchEvent = async (slug: string | undefined) => {
       if (!slug) return false;
 
-      const data = await getEventBySlug(slug);
+      const data = await getEventBySlug(slug, auth?.token);
+      reset(eventToForm(data));
+
       if (!data) return false;
 
       setEventData(data);
       return true;
     };
 
-    fetchEvent(slug)
-      .then((res) => {
-        if (res) setEditing(true);
-      })
-      .finally(() => setLoading(false));
+    fetchEvent(slug).finally(() => setLoading(false));
   }, []);
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<EventFormType>({ defaultValues: eventData });
 
@@ -88,7 +87,15 @@ function Dashboard() {
 
   if (loading) return <div>Loading...</div>;
 
-  const onSubmit: SubmitHandler<EventFormType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<EventFormType> = (data) => {
+    const updatedEvent = handleUpdateEvent(
+      data,
+      setMessage,
+      auth?.token,
+      auth?.logout
+    );
+    console.log(updatedEvent);
+  };
 
   return (
     <div className="w-4/5 sm:w-3/5 grow flex flex-col items-center gap-y-6">
@@ -103,7 +110,6 @@ function Dashboard() {
             className="outline-none border border-primary py-1 px-2 rounded-sm"
             {...register("name", { required: "This field is required" })}
             placeholder="Event Name"
-            readOnly={!editing}
           />
           <span
             className={`text-xs ${
@@ -346,10 +352,12 @@ function Dashboard() {
         <button
           type="submit"
           className="bg-ink text-background py-1 px-2 rounded-sm"
+          disabled={message === "Submitting.."}
         >
           Submit
         </button>
       </form>
+      <p className="text-primary">{message}</p>
     </div>
   );
 }

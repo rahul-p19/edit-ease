@@ -22,6 +22,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("slug");
+    window.location.href = "/login";
   };
 
   const isAuthenticated = !!token;

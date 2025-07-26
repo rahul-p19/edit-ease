@@ -16,7 +16,6 @@ type StringObj = {
 }
 
 type EventFormat = {
-  id: number;
   name: string;
   slug: string;
   description: string;

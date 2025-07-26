@@ -1,23 +1,9 @@
 [
-    {
-        "id": 1,
-        "name": "HackForge",
-        "slug": "hackforge",
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
-        "category": "CODING"
-    },
-    {
-        "id": 2,
-        "name": "SnapSyntax",
-        "slug": "snapsyntax",
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
-        "category": "CODING"
-    },
-    {
-        "id": 3,
-        "name": "Uncode",
-        "slug": "uncode",
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
-        "category": "CODING"
-    }
+  {
+    "id": 1,
+    "name": "HackForge",
+    "slug": "hackforge",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
+    "category": "CODING"
+  }
 ]

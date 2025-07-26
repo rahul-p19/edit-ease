@@ -4,13 +4,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import tech.rahulpandey.backend.model.UserPrincipal;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,17 +20,7 @@ public class JwtService {
 
     private final SecretKey key;
 
-    public JwtService(){
-        String secretKey;
-
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-            secretKey = Base64.getEncoder().encodeToString(keyGenerator.generateKey().getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Error while generating JWT Secret Key");
-            throw new RuntimeException(e);
-        }
-
+    public JwtService(@Value("${jwt.secret.key}") String secretKey){
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -66,7 +55,7 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token, UserPrincipal userDetails) {
         String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }

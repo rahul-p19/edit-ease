@@ -7,10 +7,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tech.rahulpandey.backend.model.UserPrincipal;
 import tech.rahulpandey.backend.service.JwtService;
 import tech.rahulpandey.backend.service.MyUserDetailsService;
 
@@ -41,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
+            UserPrincipal userDetails = (UserPrincipal) myUserDetailsService.loadUserByUsername(username);
 
             if(jwtService.validateToken(token,userDetails)){
                 UsernamePasswordAuthenticationToken authToken =

@@ -18,7 +18,9 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("EVENT_LEAD"));
+        String userRole = user.getRoles().iterator().next();
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole);
+        return Collections.singleton(simpleGrantedAuthority);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
     }
 
     @Override
