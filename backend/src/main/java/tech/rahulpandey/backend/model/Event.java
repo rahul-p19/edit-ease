@@ -34,8 +34,4 @@ public class Event {
 
     @ElementCollection
     private List<Organiser> organisers;
-
-    @OneToOne
-    private Users user;
-
 }

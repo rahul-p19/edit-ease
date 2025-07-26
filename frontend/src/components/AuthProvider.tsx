@@ -2,9 +2,9 @@ import { type ReactNode, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string>("");
-  const [role, setRole] = useState<string>("");
-  const [slug, setSlug] = useState<string>("");
+  const [token, setToken] = useState<string>(localStorage.getItem("token")??"");
+  const [role, setRole] = useState<string>(localStorage.getItem("role")??"");
+  const [slug, setSlug] = useState<string>(localStorage.getItem("slug")??"");
 
   const login = (userToken: string, userRole: string, userSlug: string) => {
     setToken(userToken);

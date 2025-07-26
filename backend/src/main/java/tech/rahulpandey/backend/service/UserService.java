@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tech.rahulpandey.backend.model.AuthResponse;
 import tech.rahulpandey.backend.model.MailList;
 import tech.rahulpandey.backend.model.Users;
 import tech.rahulpandey.backend.repository.MailListRepository;
@@ -31,21 +32,36 @@ public class UserService {
         this.mailListRepository = mailListRepository;
     }
 
-    public Users register(Users user){
+    public AuthResponse register(Users user){
         MailList mailList = mailListRepository.findByEmail(user.getEmail());
-        if(mailList == null) return null;
+        if(mailList == null) return new AuthResponse(false, "Email not approved");
+
+        Users existingEmailUser = userRepository.findByEmail(user.getEmail());
+
+        if(existingEmailUser != null) return new AuthResponse(false, "Email already exists");
+
         String role = mailList.getRole();
+        String slug = mailList.getEventSlug();
+        String token = jwtService.generateToken(user.getEmail());
         user.setRoles(List.of(role));
+        user.setEventSlug(slug);
         user.setPassword(encoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new AuthResponse(token,role,slug,true);
     }
 
-    public String verify(Users user) {
+    public AuthResponse verify(Users user) {
         Authentication authentication =
-                authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+                authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
 
-        if(authentication.isAuthenticated()) return jwtService.generateToken(user.getUsername());
+        if(authentication.isAuthenticated()){
+            String token = jwtService.generateToken(user.getEmail());
+            Users authenticatedUser = userRepository.findByEmail(user.getEmail());
+            String slug = authenticatedUser.getEventSlug();
+            String role = authenticatedUser.getRoles().iterator().next();
+            return new AuthResponse(token,role,slug,true);
+        }
 
-        return "failure";
+        return null;
     }
 }

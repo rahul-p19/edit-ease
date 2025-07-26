@@ -1,16 +1,14 @@
 package tech.rahulpandey.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Users {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column(unique = true)
     private String username;
@@ -22,8 +20,11 @@ public class Users {
 
     private List<String> roles;
 
-    @OneToOne
-    private Event event;
+    private String eventSlug;
+
+    public String getEventSlug(){
+        return eventSlug;
+    }
 
     public List<String> getRoles() {
         return roles;
@@ -47,5 +48,9 @@ public class Users {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEventSlug(String slug) {
+        this.eventSlug = slug;
     }
 }

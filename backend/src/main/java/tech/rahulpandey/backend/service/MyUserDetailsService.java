@@ -17,7 +17,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username){
-        Users user = repository.findByUsername(username);
+        Users user = repository.findByEmail(username);
 
         if(user == null){
             System.out.println("User not found");

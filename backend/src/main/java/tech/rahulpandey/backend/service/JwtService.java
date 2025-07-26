@@ -36,13 +36,13 @@ public class JwtService {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String username){
+    public String generateToken(String email){
         Map<String, Object> claims = new HashMap<>();
         // this will be needed if we want to add custom claims like role, userId, etc
 
         return Jwts.builder()
                 .claims(claims)
-                .subject(username)
+                .subject(email)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(key)

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.rahulpandey.backend.model.AuthResponse;
 import tech.rahulpandey.backend.model.Users;
 import tech.rahulpandey.backend.service.UserService;
 
@@ -20,15 +21,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Users> register(@RequestBody Users user) {
-        Users createdUser = userService.register(user);
-        if(createdUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new  ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<AuthResponse> register(@RequestBody Users user) {
+        AuthResponse res = userService.register(user);
+        if(!res.getOk()) return ResponseEntity.badRequest().body(res);
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Users user) {
-        return userService.verify(user);
+    public ResponseEntity<AuthResponse> login(@RequestBody Users user) {
+        AuthResponse res = userService.verify(user);
+        if(res == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
 }

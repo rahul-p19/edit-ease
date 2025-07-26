@@ -14,9 +14,8 @@ function Dashboard() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const auth = useAuth();
-
-  if(!auth || !(auth.slug === slug || auth.role === "ADMIN")) navigate("/login");
-
+  console.log(auth);
+  
   const defaultEventData: EventFormType = {
     name: "",
     slug: slug??"",
@@ -29,12 +28,13 @@ function Dashboard() {
     eventDates: [{ value: "" }],
     organisers: [{ name: "", phoneNumber: "" }],
   };
-
+  
   const [eventData, setEventData] = useState<EventFormType>(defaultEventData);
-  const [editing, setEditing] = useState<boolean>(false);
+  const [editing, setEditing] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
-
+  
   useEffect(() => {
+    if(!auth || !(auth.slug === slug || auth.role === "ADMIN")) navigate("/login");
     const fetchEvent = async (slug: string | undefined) => {
       if (!slug) return false;
 
@@ -103,7 +103,7 @@ function Dashboard() {
             className="outline-none border border-primary py-1 px-2 rounded-sm"
             {...register("name", { required: "This field is required" })}
             placeholder="Event Name"
-            readOnly={editing}
+            readOnly={!editing}
           />
           <span
             className={`text-xs ${

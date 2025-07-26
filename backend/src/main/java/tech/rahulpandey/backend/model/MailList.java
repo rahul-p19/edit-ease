@@ -10,6 +10,12 @@ public class MailList {
 
     private String role;
 
+    private String eventSlug;
+
+    public String getEventSlug(){
+        return eventSlug;
+    }
+
     public String getRole() {
         return role;
     }

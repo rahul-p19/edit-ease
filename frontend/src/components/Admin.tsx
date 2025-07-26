@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-const EVENTS_URL = `${import.meta.env.BACKEND_URL}/api/events/getAll`;
+const EVENTS_URL = `${import.meta.env.VITE_BACKEND_URL}/api/events/getAll`;
 
 type EventType = {
   id: number;
@@ -14,13 +14,13 @@ function Admin() {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  if (!auth || auth.role !== "ADMIN") navigate("/login");
-
+  
   const [events, setEvents] = useState<EventType[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-
+  
   useEffect(() => {
+    if (!auth || auth.role !== "ADMIN") navigate("/login");
     const fetchEvents = async () => {
       const res = await fetch(EVENTS_URL, { credentials: "include" });
       const data = await res.json();

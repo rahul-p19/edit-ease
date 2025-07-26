@@ -15,7 +15,7 @@ public class CustomCorsConfig implements CorsConfigurationSource {
         config.setAllowCredentials(true);
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
-        config.setAllowedOrigins(List.of("http://localhost:5173", "https://editease.rahul.pandey.tech"));
+        config.setAllowedOrigins(List.of("http://localhost:5173", "https://editease.rahulpandey.tech"));
         return config;
     }
 }
