@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import tech.rahulpandey.backend.model.Event;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,20 +19,25 @@ public class JsonService {
         this.objectMapper = objectMapper;
     }
 
-    public String extractShaFromResponse(String res) throws JsonProcessingException {
-        JsonNode jsonNode = objectMapper.readTree(res);
-        return jsonNode.get("sha").asText();
+    public String extractShaFromResponse(String res) {
+        try{
+            JsonNode jsonNode = objectMapper.readTree(res);
+            return jsonNode.get("sha").asText();
+        }catch(JsonProcessingException e){
+            System.out.println("Error while extracting sha: "+e.getMessage());
+        }
+        return null;
     }
 
-    public String buildRequestBody(String sha,String body) throws JsonProcessingException {
-        JsonNode jsonNode = objectMapper.readTree(body);
-        String content = jsonNode.get("content").asText();
-        String message = jsonNode.get("message").asText();
+    public String buildRequestBody(String sha, Event event) throws JsonProcessingException {
+        String eventJson = objectMapper.writeValueAsString(event);
+        System.out.println(eventJson);
+        String content = Base64.getEncoder().encodeToString(eventJson.getBytes());
 
         Map<String,String> data = new HashMap<>();
-        data.put("sha",sha);
+        if(sha != null) data.put("sha",sha);
         data.put("content",content);
-        data.put("message",message);
+        data.put("message","chore: update "+event.getName()+" content");
 
         return objectMapper.writeValueAsString(data);
     }

@@ -25,12 +25,13 @@ public class EventDataController {
 
     @PutMapping("/{path}")
     public ResponseEntity<Event> updateEventData(@PathVariable String path, @RequestBody Event event) throws IOException {
-//            String sha = restClientService.getFileSha(path);
-//            String githubReqBody = jsonService.buildRequestBody(sha,body);
-//            restClientService.updateFileContent(path, githubReqBody);
-        //System.out.println("controller: "+event);
+            String sha = restClientService.getFileSha(path);
+            String githubReqBody = jsonService.buildRequestBody(sha,event);
+            System.out.println( githubReqBody);
+            restClientService.updateFileContent(path, githubReqBody);
+
         Event updatedEvent = eventService.updateEvent(event);
-        return ResponseEntity.ok(new Event());
+        return ResponseEntity.ok(updatedEvent);
     }
 
     // add a get mapping method to fetch event data from a database
