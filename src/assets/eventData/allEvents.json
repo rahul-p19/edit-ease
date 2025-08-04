@@ -1,9 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "HackForge",
-    "slug": "hackforge",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero recusandae? Vitae, exercitationem mollitia perspiciatis atque placeat autem reprehenderit corrupti similique dignissimos quae sit laudantium!",
-    "category": "CODING"
-  }
-]
+[{"name":"HackForge","slug":"hackforge","description":"hack","category":"CODING"},{"name":"Uncode","slug":"uncode","description":"Reverse engineering competition.","category":"CODING"}]
